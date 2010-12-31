@@ -25,18 +25,23 @@ class IdentifierExpression
   def to_s
     @name
   end
-  def method_missing method
-    return MethodCallExpression.new self, method.to_s
+  def method_missing method, *args
+    return MethodCallExpression.new self, method.to_s, args
   end
 end
 
 class MethodCallExpression
-  def initialize reciever, methodname
+  def initialize reciever, methodname, args
     @reciever = reciever
     @name = methodname
+    @args = args
   end
   def to_s
-    "#{@reciever}.#{@name}"
+    if @args.empty?
+      "#{@reciever}.#{@name}"
+    else
+      "#{@reciever}.#{@name}(#{@args.join(', ')})"
+    end
   end
 end
 

@@ -6,5 +6,6 @@ class BasicTest < Test::Unit::TestCase
     assert_equal "", combinator { }.to_s
     assert_equal "foo", combinator { foo }.to_s
     assert_equal "foo.foo", combinator { foo.foo }.to_s
+    assert_equal "foo.foo(1)", combinator { foo.foo 1 }.to_s
   end
 end

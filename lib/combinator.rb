@@ -14,26 +14,7 @@ end
 
 class EmptyExpression
   def method_missing method, *args
-    return IdentifierExpression.new method.to_s, args
-  end
-end
-
-class IdentifierExpression
-  def initialize name, args
-    @name = name
-    @args = args
-  end
-
-  def to_s
-    if @args.empty?
-      @name
-    else
-      "#{@name}(#{@args.join(', ')})"
-    end
-  end
-
-  def method_missing method, *args
-    return MethodCallExpression.new self, method.to_s, args
+    return MethodCallExpression.new nil, method.to_s, args
   end
 end
 
@@ -45,11 +26,12 @@ class MethodCallExpression
   end
 
   def to_s
-    if @args.empty?
-      "#{@reciever}.#{@name}"
-    else
-      "#{@reciever}.#{@name}(#{@args.join(', ')})"
+    str = @reciever.nil? ? "" : "#{@reciever}."
+    str << @name
+    unless @args.empty?
+      str << "(#{@args.join(', ')})"
     end
+    str
   end
 
   def method_missing method, *args

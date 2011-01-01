@@ -19,7 +19,7 @@ class Combinator
     if expression._to_s == ""
       "empty block"
     else
-      str = "#{self.to_s} is #{self.call}"
+      str = "#{self.to_s} is #{self.call.inspect}"
       if expression._method == :==
 	b = @block.binding
 	lft = expression._reciever._to_s
@@ -47,7 +47,7 @@ class EmptyExpression
     end
     result = self.instance_eval(&blk) || self
     keep.each do |var, val|
-      eval "#{var} = #{val}", b
+      eval "#{var} = #{val.inspect}", b
     end
     result
   end

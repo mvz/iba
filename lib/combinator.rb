@@ -22,7 +22,11 @@ end
 
 class EmptyExpression
   def method_missing method, *args
-    return MethodCallExpression.new nil, method, args
+    return MethodCallExpression.new self, method, args
+  end
+
+  def _to_s
+    ""
   end
 end
 
@@ -35,16 +39,22 @@ class MethodCallExpression
   end
 
   def _to_s
-    rcv = @reciever.nil? ? "" : @reciever._to_s
+    rcv = @reciever._to_s
     args = @args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
 
     if @method == :[]
       "#{rcv}[#{args[0]}]"
     elsif method_is_operator?
-      raise NotImplementedError if @args.length != 1
-      "(#{rcv} #{@method} #{args[0]})"
+      case @args.length
+      when 0
+	"#{@method.to_s.sub(/@$/, '')}#{rcv}"
+      when 1
+	"(#{rcv} #{@method} #{args.first})"
+      else
+	raise NotImplementedError
+      end
     else
-      str = @reciever.nil? ? "" : "#{rcv}."
+      str = rcv == "" ? "" : "#{rcv}."
       str << @method.to_s
       unless @args.empty?
 	str << "(#{args.join(', ')})"

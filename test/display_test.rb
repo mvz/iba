@@ -35,6 +35,10 @@ class DisplayTest < Test::Unit::TestCase
     assert_equal "foo.to_s", combinator { foo.to_s }.to_s
   end
 
+  def test_operator_unary_minus
+    assert_equal "-foo", combinator { -foo }.to_s
+  end
+
   def test_operator_if_wont_work
     assert_equal "bar", combinator { foo ? bar : baz }.to_s
   end

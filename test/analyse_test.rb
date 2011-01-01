@@ -22,5 +22,11 @@ class AnalyseTest < Test::Unit::TestCase
     foo = "blub"
     assert_equal "foo is \"blub\"", combinator { foo }.analyse
   end
+
+  def test_object_variable
+    foo = Object.new
+    insp = foo.inspect
+    assert_equal "foo is #{insp}", combinator { foo }.analyse
+  end
 end
 

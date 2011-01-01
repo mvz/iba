@@ -40,15 +40,21 @@ class EmptyExpression
 
   def _parse &blk
     b = blk.binding
+
     vars = eval "local_variables", b
-    keep = vars.map {|v| [v, eval(v, b)]}
     vars.each do |v|
+      next if v =~ /^_/
+      eval "_#{v} = #{v}", b
       eval "#{v} = MethodCallExpression.new(EmptyExpression.new, :#{v}, [])", b
     end
+
     result = self.instance_eval(&blk) || self
-    keep.each do |var, val|
-      eval "#{var} = #{val.inspect}", b
+
+    vars.each do |v|
+      next if v =~ /^_/
+      eval "#{v} = _#{v}", b
     end
+
     result
   end
 

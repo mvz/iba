@@ -14,28 +14,44 @@ end
 
 class EmptyExpression
   def method_missing method, *args
-    return MethodCallExpression.new nil, method.to_s, args
+    return MethodCallExpression.new nil, method, args
   end
 end
 
 class MethodCallExpression
+  OPERATORS = [:+]
   def initialize reciever, methodname, args
     @reciever = reciever
-    @name = methodname
+    @method = methodname
     @args = args
   end
 
   def to_s
-    str = @reciever.nil? ? "" : "#{@reciever}."
-    str << @name
-    unless @args.empty?
-      str << "(#{@args.join(', ')})"
+    if @method == :[]
+      "#{@reciever}[#{@args[0]}]"
+    elsif method_is_operator?
+      raise NotImplementedError if @args.length != 1
+      "(#{@reciever} #{@method} #{@args[0]})"
+    else
+      str = @reciever.nil? ? "" : "#{@reciever}."
+      str << @method.to_s
+      unless @args.empty?
+	str << "(#{@args.join(', ')})"
+      end
+      str
     end
-    str
   end
 
   def method_missing method, *args
-    return MethodCallExpression.new self, method.to_s, args
+    return MethodCallExpression.new self, method, args
+  end
+
+  def method_is_operator?
+    @method.to_s !~ /^[a-z]/
+  end
+
+  def == other
+    method_missing :==, other
   end
 end
 

@@ -6,6 +6,10 @@ class DisplayTest < Test::Unit::TestCase
     assert_equal "", combinator { }.to_s
   end
 
+  def test_literal
+    assert_equal "23", combinator { 23 }.to_s
+  end
+
   def test_method_calls
     assert_equal "foo", combinator { foo }.to_s
     assert_equal "foo.foo", combinator { foo.foo }.to_s

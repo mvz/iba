@@ -60,7 +60,10 @@ class EmptyExpression
       eval "#{v} = MethodCallExpression.new(EmptyExpression.new, :#{v}, [])", b
     end
 
-    result = self.instance_eval(&blk) || self
+    result = self.instance_eval(&blk)
+    unless result.class == MethodCallExpression
+      result = LiteralExpression.new(result)
+    end
 
     vars.each do |v|
       next if v =~ /^_/

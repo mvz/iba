@@ -1,7 +1,6 @@
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
-require 'combinator'
 
-# Test how the combinator displays the parsed block contents.
+# Test how the combinator calls the passed block.
 class CallTest < Test::Unit::TestCase
   def test_empty_combinator
     assert_equal nil, combinator { }.call
@@ -17,4 +16,3 @@ class CallTest < Test::Unit::TestCase
     assert_equal true, combinator { foo == 23 }.call
   end
 end
-

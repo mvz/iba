@@ -1,5 +1,4 @@
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
-require 'combinator'
 
 # Test how the combinator displays the parsed block contents.
 class DisplayTest < Test::Unit::TestCase

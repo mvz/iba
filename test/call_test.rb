@@ -7,9 +7,14 @@ class CallTest < Test::Unit::TestCase
     assert_equal nil, combinator { }.call
   end
 
-  def test_method_calls
+  def test_variable
     foo = 23
     assert_equal 23, combinator { foo }.call
+  end
+
+  def test_operator_call
+    foo = 23
+    assert_equal true, combinator { foo == 23 }.call
   end
 end
 

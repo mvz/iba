@@ -1,7 +1,6 @@
 class Combinator
   def initialize &blk
     @block = blk
-    @result = EmptyExpression.new.instance_eval(&blk)
   end
 
   def call
@@ -9,7 +8,15 @@ class Combinator
   end
 
   def to_s
-    @result.to_s
+    if expression.respond_to? :_to_s
+      expression._to_s
+    else
+      expression.to_s
+    end
+  end
+
+  def expression
+    @expression ||= EmptyExpression.new.instance_eval(&@block)
   end
 end
 
@@ -27,17 +34,20 @@ class MethodCallExpression
     @args = args
   end
 
-  def to_s
+  def _to_s
+    rcv = @reciever.nil? ? "" : @reciever._to_s
+    args = @args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
+
     if @method == :[]
-      "#{@reciever}[#{@args[0]}]"
+      "#{rcv}[#{args[0]}]"
     elsif method_is_operator?
       raise NotImplementedError if @args.length != 1
-      "(#{@reciever} #{@method} #{@args[0]})"
+      "(#{rcv} #{@method} #{args[0]})"
     else
-      str = @reciever.nil? ? "" : "#{@reciever}."
+      str = @reciever.nil? ? "" : "#{rcv}."
       str << @method.to_s
       unless @args.empty?
-	str << "(#{@args.join(', ')})"
+	str << "(#{args.join(', ')})"
       end
       str
     end
@@ -49,6 +59,10 @@ class MethodCallExpression
 
   def method_is_operator?
     @method.to_s !~ /^[a-z]/
+  end
+
+  def to_s
+    method_missing :to_s
   end
 
   def == other

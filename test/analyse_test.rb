@@ -18,6 +18,12 @@ class AnalyseTest < Test::Unit::TestCase
       combinator { foo == bar }.analyse 
   end
 
+  def test_operator_equals_literal
+    foo = 42
+    assert_equal "(foo == 23) is false\nfoo is 42",
+      combinator { foo == 23 }.analyse 
+  end
+
   def test_string_variable
     foo = "blub"
     assert_equal "foo is \"blub\"", combinator { foo }.analyse

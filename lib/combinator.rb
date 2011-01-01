@@ -22,15 +22,27 @@ class Combinator
       str = "#{self.to_s} is #{self.call.inspect}"
       if expression._method == :==
 	b = @block.binding
-	lft = expression._reciever._to_s
-	rgt = expression._args.first._to_s
+	lft = expression._reciever
+	rgt = expression._args.first
+	exprs = [lft, rgt].map {|e| display_subexpression e}.compact
 	str << "\n"
-	str << "#{lft} is #{eval lft, b}, "
-	str << "#{rgt} is #{eval rgt, b}"
+	str << exprs.join(", ")
       end
       str
     end
   end
+
+  private
+
+  def display_subexpression expr
+    if expr.class == LiteralExpression
+      nil
+    else
+      str = expr._to_s
+      "#{str} is #{eval str, @block.binding}"
+    end
+  end
+
 end
 
 class EmptyExpression
@@ -63,12 +75,22 @@ class EmptyExpression
   end
 end
 
+class LiteralExpression
+  def initialize val
+    @value = val
+  end
+
+  def _to_s
+    @value.to_s
+  end
+end
+
 class MethodCallExpression
   OPERATORS = [:+]
   def initialize reciever, methodname, args
     @reciever = reciever
     @method = methodname
-    @args = args
+    @args = args.map {|a| _wrap(a)}
   end
 
   def _method
@@ -123,6 +145,16 @@ class MethodCallExpression
 
   def == other
     method_missing :==, other
+  end
+
+  private
+
+  def _wrap arg
+    if arg.class == MethodCallExpression
+      arg
+    else
+      LiteralExpression.new arg
+    end
   end
 end
 

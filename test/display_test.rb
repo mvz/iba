@@ -1,7 +1,8 @@
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 require 'combinator'
 
-class BasicTest < Test::Unit::TestCase
+# Test how the combinator displays the parsed block contents.
+class DisplayTest < Test::Unit::TestCase
   def test_empty_combinator
     assert_equal "", combinator { }.to_s
   end

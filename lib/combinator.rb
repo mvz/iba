@@ -18,6 +18,10 @@ class Combinator
   def expression
     @expression ||= EmptyExpression.new.instance_eval(&@block)
   end
+
+  def analyse
+    "nil is nil"
+  end
 end
 
 class EmptyExpression

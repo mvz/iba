@@ -1,10 +1,11 @@
 class Combinator
   def initialize &blk
+    @block = blk
     @result = EmptyExpression.new.instance_eval(&blk)
   end
 
   def call
-    nil
+    @block.call
   end
 
   def to_s

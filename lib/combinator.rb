@@ -19,7 +19,16 @@ class Combinator
     if expression._to_s == ""
       "empty block"
     else
-      "#{self.to_s} is #{self.call}"
+      str = "#{self.to_s} is #{self.call}"
+      if expression._method == :==
+	b = @block.binding
+	lft = expression._reciever._to_s
+	rgt = expression._args.first._to_s
+	str << "\n"
+	str << "#{lft} is #{eval lft, b}, "
+	str << "#{rgt} is #{eval rgt, b}"
+      end
+      str
     end
   end
 end
@@ -56,6 +65,18 @@ class MethodCallExpression
     @args = args
   end
 
+  def _method
+    @method
+  end
+
+  def _reciever
+    @reciever
+  end
+
+  def _args
+    @args
+  end
+
   def _to_s
     rcv = @reciever._to_s
     args = @args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
@@ -82,6 +103,7 @@ class MethodCallExpression
   end
 
   def method_missing method, *args
+    super if method.to_s =~ /^_/
     return MethodCallExpression.new self, method, args
   end
 

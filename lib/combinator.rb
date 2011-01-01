@@ -8,25 +8,39 @@ class Combinator
   end
 
   def to_s
-    if expression.respond_to? :_to_s
-      expression._to_s
-    else
-      expression.to_s
-    end
+    expression._to_s
   end
 
   def expression
-    @expression ||= EmptyExpression.new.instance_eval(&@block)
+    @expression ||= EmptyExpression.new._parse(&@block)
   end
 
   def analyse
-    "nil is nil"
+    if expression._to_s == ""
+      "empty block"
+    else
+      "#{self.to_s} is #{self.call}"
+    end
   end
 end
 
 class EmptyExpression
   def method_missing method, *args
     return MethodCallExpression.new self, method, args
+  end
+
+  def _parse &blk
+    b = blk.binding
+    vars = eval "local_variables", b
+    keep = vars.map {|v| [v, eval(v, b)]}
+    vars.each do |v|
+      eval "#{v} = MethodCallExpression.new(EmptyExpression.new, :#{v}, [])", b
+    end
+    result = self.instance_eval(&blk) || self
+    keep.each do |var, val|
+      eval "#{var} = #{val}", b
+    end
+    result
   end
 
   def _to_s

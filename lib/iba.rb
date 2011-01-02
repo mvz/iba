@@ -164,13 +164,14 @@ class MethodCallExpression
 end
 
 module BlockAssertion
-  def assert
+  def assert *args
     if block_given?
       if yield
 	assert_block("true") { true }
       else
-	message = Combinator.new(&Proc.new).analyse
-	assert_block(message) { false }
+        msg = args.empty? ? "" : args.first
+	ana = Combinator.new(&Proc.new).analyse
+	assert_block(build_message(msg, ana)) { false }
       end
     else
       super

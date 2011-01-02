@@ -22,5 +22,14 @@ class AssertTest < Test::Unit::TestCase
       assert_equal "(foo == 23) is false\nfoo is 24", e.message
     end
   end
+
+  def test_assert_with_custom_message
+    foo = false
+    begin
+      assert("We want foo") { foo }
+    rescue Exception => e
+      assert_equal "We want foo.\nfoo is false", e.message
+    end
+  end
 end
 

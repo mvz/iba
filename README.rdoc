@@ -13,11 +13,16 @@ Introspective Block Assertions
 
 == Synopsis
 
+  # In your test helper:
   require 'iba'
+  class Test::Unit::TestCase
+    include Iba::BlockAssertion
+  end
 
+  # In your test:
   foo = 24
   assert { foo == 23 } # => "(foo == 23) is false
-			     foo is 24."
+                       #     foo is 24."
 
 == Details
 

@@ -1,3 +1,5 @@
+module Iba
+
 class Combinator
   def initialize &blk
     @block = blk
@@ -57,7 +59,7 @@ class EmptyExpression
     vars.each do |v|
       next if v =~ /^_/
       eval "_#{v} = #{v}", b
-      eval "#{v} = MethodCallExpression.new(EmptyExpression.new, :#{v}, [])", b
+      eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])", b
     end
 
     result = self.instance_eval(&blk)
@@ -161,23 +163,19 @@ class MethodCallExpression
   end
 end
 
-class Object
-  def combinator &blk
-    return Combinator.new(&blk)
-  end
-end
-
 module BlockAssertion
   def assert
     if block_given?
       if yield
 	assert_block("true") { true }
       else
-	message = combinator(&Proc.new).analyse
+	message = Combinator.new(&Proc.new).analyse
 	assert_block(message) { false }
       end
     else
       super
     end
   end
+end
+
 end

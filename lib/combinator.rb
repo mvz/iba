@@ -20,7 +20,7 @@ class Combinator
       "empty block"
     else
       str = "#{self.to_s} is #{self.call.inspect}"
-      if expression._method == :==
+      if expression.class == MethodCallExpression and expression._method == :==
 	b = @block.binding
 	lft = expression._reciever
 	rgt = expression._args.first

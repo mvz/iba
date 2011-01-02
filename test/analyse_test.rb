@@ -34,5 +34,9 @@ class AnalyseTest < Test::Unit::TestCase
     insp = foo.inspect
     assert_equal "foo is #{insp}", combinator { foo }.analyse
   end
+
+  def test_literal
+    assert_equal "23 is 23", combinator { 23 }.analyse
+  end
 end
 

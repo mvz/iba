@@ -31,5 +31,21 @@ class AssertTest < Test::Unit::TestCase
       assert_equal "We want foo.\nfoo is false", e.message
     end
   end
+
+  def test_original_assert
+    begin
+      assert false
+    rescue Exception => e
+      assert_equal "<false> is not true.", e.message
+    end
+  end
+
+  def test_original_assert_with_custom_message
+    begin
+      assert false, "We want the truth"
+    rescue Exception => e
+      assert_equal "We want the truth.\n<false> is not true.", e.message
+    end
+  end
 end
 

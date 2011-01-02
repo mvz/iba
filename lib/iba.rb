@@ -171,7 +171,7 @@ module BlockAssertion
       else
         msg = args.empty? ? "" : args.first
 	ana = Combinator.new(&Proc.new).analyse
-	assert_block(build_message(msg, ana)) { false }
+	assert_block(build_message(msg, "#{ana}.")) { false }
       end
     else
       super

@@ -10,7 +10,7 @@ class AssertTest < Test::Unit::TestCase
     begin
       assert { false }
     rescue Exception => e
-      assert_equal "false is false", e.message
+      assert_equal "false is false.", e.message
     end
   end
 
@@ -19,7 +19,7 @@ class AssertTest < Test::Unit::TestCase
     begin
       assert { foo == 23  }
     rescue Exception => e
-      assert_equal "(foo == 23) is false\nfoo is 24", e.message
+      assert_equal "(foo == 23) is false\nfoo is 24.", e.message
     end
   end
 
@@ -28,7 +28,7 @@ class AssertTest < Test::Unit::TestCase
     begin
       assert("We want foo") { foo }
     rescue Exception => e
-      assert_equal "We want foo.\nfoo is false", e.message
+      assert_equal "We want foo.\nfoo is false.", e.message
     end
   end
 

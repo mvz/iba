@@ -13,5 +13,14 @@ class AssertTest < Test::Unit::TestCase
       assert_equal "false is false", e.message
     end
   end
+
+  def test_operator_equals_assert
+    foo = 24
+    begin
+      assert { foo == 23  }
+    rescue Exception => e
+      assert_equal "(foo == 23) is false\nfoo is 24", e.message
+    end
+  end
 end
 

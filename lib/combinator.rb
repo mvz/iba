@@ -166,3 +166,18 @@ class Object
     return Combinator.new(&blk)
   end
 end
+
+module BlockAssertion
+  def assert
+    if block_given?
+      if yield
+	assert_block("true") { true }
+      else
+	message = combinator(&Proc.new).analyse
+	assert_block(message) { false }
+      end
+    else
+      super
+    end
+  end
+end

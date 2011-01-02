@@ -6,10 +6,11 @@ by Matijs van Zuijlen
 
 Introspective Block Assertions
 
-== Features
+== Features/Problems
 
 * Write assertions as a (one-expression) block
 * Assertion message deconstructs the block's expression.
+* Not done yet.
 
 == Synopsis
 

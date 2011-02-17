@@ -3,7 +3,7 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 # Test how the combinator analyses the parsed block contents.
 class AnalyseTest < Test::Unit::TestCase
   def test_empty_block
-    assert_equal "empty block", combinator { }.analyse
+    assert_equal "nil is nil", combinator { }.analyse
   end
 
   def test_variable
@@ -24,9 +24,20 @@ class AnalyseTest < Test::Unit::TestCase
       combinator { foo == 23 }.analyse 
   end
 
+  def test_operator_equals_array_literal
+    foo = [1, "bar"]
+    assert_equal "(foo == [2, \"baz\"]) is false\nfoo is [1, \"bar\"]",
+      combinator { foo == [2, "baz"] }.analyse 
+  end
+
   def test_string_variable
     foo = "blub"
     assert_equal "foo is \"blub\"", combinator { foo }.analyse
+  end
+
+  def test_array_variable
+    foo = [1, 2]
+    assert_equal "foo is [1, 2]", combinator { foo }.analyse
   end
 
   def test_object_variable

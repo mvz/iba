@@ -18,20 +18,16 @@ class Combinator
   end
 
   def analyse
-    if expression._to_s == ""
-      "empty block"
-    else
-      str = "#{self.to_s} is #{self.call.inspect}"
-      if expression.class == MethodCallExpression and expression._method == :==
-	b = @block.binding
-	lft = expression._reciever
-	rgt = expression._args.first
-	exprs = [lft, rgt].map {|e| display_subexpression e}.compact
-	str << "\n"
-	str << exprs.join(", ")
-      end
-      str
+    str = "#{self.to_s} is #{self.call.inspect}"
+    if expression.class == MethodCallExpression and expression._method == :==
+      b = @block.binding
+      lft = expression._reciever
+      rgt = expression._args.first
+      exprs = [lft, rgt].map {|e| display_subexpression e}.compact
+      str << "\n"
+      str << exprs.join(", ")
     end
+    str
   end
 
   private
@@ -41,7 +37,7 @@ class Combinator
       nil
     else
       str = expr._to_s
-      "#{str} is #{eval str, @block.binding}"
+      "#{str} is #{eval(str, @block.binding).inspect}"
     end
   end
 
@@ -86,7 +82,7 @@ class LiteralExpression
   end
 
   def _to_s
-    @value.to_s
+    @value.inspect
   end
 end
 

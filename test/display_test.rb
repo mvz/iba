@@ -3,11 +3,15 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 # Test how the combinator displays the parsed block contents.
 class DisplayTest < Test::Unit::TestCase
   def test_empty_combinator
-    assert_equal "", combinator { }.to_s
+    assert_equal "nil", combinator { }.to_s
   end
 
-  def test_literal
+  def test_literal_number
     assert_equal "23", combinator { 23 }.to_s
+  end
+
+  def test_literal_string
+    assert_equal "\"aa\"", combinator { "aa" }.to_s
   end
 
   def test_method_calls

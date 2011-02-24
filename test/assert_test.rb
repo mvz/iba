@@ -6,22 +6,29 @@ class AssertTest < Test::Unit::TestCase
     assert { true }
   end
 
-  def test_simple_failing_assert
+  def failing_block_assertion_test message, &block
     begin
-      assert { false }
+      assert(&block)
     rescue Exception => e
-      assert_equal "false is false.", e.message
+      assert_equal message, e.message
     end
+  end
+
+  def test_simple_failing_assert
+    failing_block_assertion_test("false is false.") { false }
   end
 
   def test_operator_equals_assert
     foo = 24
-    begin
-      assert { foo == 23  }
-    rescue Exception => e
-      assert_equal "(foo == 23) is false\nfoo is 24.", e.message
-    end
+    failing_block_assertion_test("(foo == 23) is false\nfoo is 24.") { foo == 23  }
   end
+
+  def test_instance_variable_assert
+    @foo = 24
+    failing_block_assertion_test("(@foo == 23) is false\n@foo is 24.") { @foo == 23  }
+  end
+
+  # Special cases
 
   def test_assert_with_custom_message
     foo = false

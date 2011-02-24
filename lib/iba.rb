@@ -52,6 +52,9 @@ class EmptyExpression
     b = blk.binding
 
     vars = eval "local_variables", b
+    ivars = eval "instance_variables", b
+
+    _override_instance_variables ivars
 
     _override_local_variables vars, b
 
@@ -63,6 +66,13 @@ class EmptyExpression
     _restore_local_variables vars, b
 
     result
+  end
+
+  def _override_instance_variables vars
+    vars.each do |v|
+      next if v =~ /^@_/
+      eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])"
+    end
   end
 
   def _override_local_variables vars, b

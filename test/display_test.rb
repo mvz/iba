@@ -49,4 +49,9 @@ class DisplayTest < Test::Unit::TestCase
   def test_operator_if_wont_work
     assert_equal "bar", combinator { foo ? bar : baz }.to_s
   end
+
+  def test_defined_instance_variables
+    @foo = 1
+    assert_equal "@foo", combinator { @foo }.to_s
+  end
 end

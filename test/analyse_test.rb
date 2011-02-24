@@ -49,5 +49,10 @@ class AnalyseTest < Test::Unit::TestCase
   def test_literal
     assert_equal "23 is 23", combinator { 23 }.analyse
   end
+
+  def test_instance_variable
+    @foo = 23
+    assert_equal "@foo is 23", combinator { @foo }.analyse
+  end
 end
 

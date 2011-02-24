@@ -106,7 +106,6 @@ class LiteralExpression
 end
 
 class MethodCallExpression
-  OPERATORS = [:+]
   def initialize reciever, methodname, args
     @reciever = reciever
     @method = methodname

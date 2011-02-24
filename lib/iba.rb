@@ -106,43 +106,33 @@ class LiteralExpression
 end
 
 class MethodCallExpression
+  attr_reader :_method, :_reciever, :_args
+
   def initialize reciever, methodname, args
-    @reciever = reciever
-    @method = methodname
-    @args = args.map {|a| _wrap(a)}
-  end
-
-  def _method
-    @method
-  end
-
-  def _reciever
-    @reciever
-  end
-
-  def _args
-    @args
+    @_reciever = reciever
+    @_method = methodname
+    @_args = args.map {|a| _wrap(a)}
   end
 
   def _to_s
-    rcv = @reciever._to_s
-    args = @args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
+    rcv = @_reciever._to_s
+    args = @_args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
 
-    if @method == :[]
+    if @_method == :[]
       "#{rcv}[#{args[0]}]"
     elsif method_is_operator?
-      case @args.length
+      case @_args.length
       when 0
-	"#{@method.to_s.sub(/@$/, '')}#{rcv}"
+	"#{@_method.to_s.sub(/@$/, '')}#{rcv}"
       when 1
-	"(#{rcv} #{@method} #{args.first})"
+	"(#{rcv} #{@_method} #{args.first})"
       else
 	raise NotImplementedError
       end
     else
       str = rcv == "" ? "" : "#{rcv}."
-      str << @method.to_s
-      unless @args.empty?
+      str << @_method.to_s
+      unless @_args.empty?
 	str << "(#{args.join(', ')})"
       end
       str
@@ -155,7 +145,7 @@ class MethodCallExpression
   end
 
   def method_is_operator?
-    @method.to_s !~ /^[a-z]/
+    @_method.to_s !~ /^[a-z]/
   end
 
   def to_s

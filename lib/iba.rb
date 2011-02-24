@@ -52,23 +52,32 @@ class EmptyExpression
     b = blk.binding
 
     vars = eval "local_variables", b
-    vars.each do |v|
-      next if v =~ /^_/
-      eval "_#{v} = #{v}", b
-      eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])", b
-    end
+
+    _override_local_variables vars, b
 
     result = self.instance_eval(&blk)
     unless result.class == MethodCallExpression
       result = LiteralExpression.new(result)
     end
 
+    _restore_local_variables vars, b
+
+    result
+  end
+
+  def _override_local_variables vars, b
+    vars.each do |v|
+      next if v =~ /^_/
+      eval "_#{v} = #{v}", b
+      eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])", b
+    end
+  end
+
+  def _restore_local_variables vars, b
     vars.each do |v|
       next if v =~ /^_/
       eval "#{v} = _#{v}", b
     end
-
-    result
   end
 
   def _to_s

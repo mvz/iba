@@ -39,8 +39,11 @@ to the contents of the block.
 Current limits:
 
 * Only single-expression blocks are supported.
-* The expression must start with a method-like identifier (like 'foo', but
-  not 'Foo' or '23'). In practice, this produces quite natural results.
+* The expression must start with a method-like identifier or an instance
+  variable (like 'foo'  or '@foo', but not 'Foo' or '23'). In practice,
+  this produces quite natural results.
+* Local and instance variables whose names start with an underscore should
+  not be used inside the block.
 
 Iba's implementation is inspired by Arlo[2], a generic combinator library
 for Python.

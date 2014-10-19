@@ -17,13 +17,13 @@ module Iba
     end
 
     def analyse
-      str = "#{self.to_s} is #{self.call.inspect}"
+      str = "#{self} is #{call.inspect}"
       if expression.class == MethodCallExpression and expression._method == :==
         lft = expression._reciever
         rgt = expression._args.first
-        exprs = [lft, rgt].map {|e| display_subexpression e}.compact
+        exprs = [lft, rgt].map { |e| display_subexpression e }.compact
         str << "\n"
-        str << exprs.join(", ")
+        str << exprs.join(', ')
       end
       str
     end
@@ -49,14 +49,14 @@ module Iba
     def _parse &blk
       b = blk.binding
 
-      vars = eval "local_variables", b
-      ivars = eval "instance_variables", b
+      vars = eval 'local_variables', b
+      ivars = eval 'instance_variables', b
 
       _override_instance_variables ivars
 
       _override_local_variables vars, b
 
-      result = self.instance_eval(&blk)
+      result = instance_eval(&blk)
       unless result.class == MethodCallExpression
         result = LiteralExpression.new(result)
       end
@@ -89,7 +89,7 @@ module Iba
     end
 
     def _to_s
-      ""
+      ''
     end
   end
 
@@ -109,12 +109,12 @@ module Iba
     def initialize reciever, methodname, args
       @_reciever = reciever
       @_method = methodname
-      @_args = args.map {|a| _wrap(a)}
+      @_args = args.map { |a| _wrap(a) }
     end
 
     def _to_s
       rcv = @_reciever._to_s
-      args = @_args.map {|a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
+      args = @_args.map { |a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
 
       if @_method == :[]
         "#{rcv}[#{args[0]}]"
@@ -128,7 +128,7 @@ module Iba
           raise NotImplementedError
         end
       else
-        str = rcv == "" ? "" : "#{rcv}."
+        str = rcv == '' ? '' : "#{rcv}."
         str << @_method.to_s
         unless @_args.empty?
           str << "(#{args.join(', ')})"
@@ -166,14 +166,14 @@ module Iba
   end
 
   module BlockAssertion
-    if RUBY_VERSION < "1.9"
+    if RUBY_VERSION < '1.9'
 
       def assert *args
         if block_given?
           if yield
-            assert_block("true") { true }
+            assert_block('true') { true }
           else
-            msg = args.empty? ? "" : args.first
+            msg = args.empty? ? '' : args.first
             ana = Combinator.new(&Proc.new).analyse
             assert_block(build_message msg, "#{ana}.") { false }
           end
@@ -187,9 +187,9 @@ module Iba
       def assert *args
         if block_given?
           if yield
-            assert_block("true") { true }
+            assert_block('true') { true }
           else
-            msg = args.empty? ? "" : args.first
+            msg = args.empty? ? '' : args.first
             ana = Combinator.new(&Proc.new).analyse
             assert_block(message(msg) { ana }) { false }
           end
@@ -197,7 +197,7 @@ module Iba
           test, msg = *args
           case msg
           when nil, String
-            msg = message(msg) { "<false> is not true" }
+            msg = message(msg) { '<false> is not true' }
           end
           super test, msg
         end

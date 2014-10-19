@@ -7,15 +7,13 @@ class AssertTest < Test::Unit::TestCase
   end
 
   def failing_block_assertion_test message, &block
-    begin
-      assert(&block)
-    rescue Exception => e
-      assert_equal message, e.message
-    end
+    assert(&block)
+  rescue Exception => e
+    assert_equal message, e.message
   end
 
   def test_simple_failing_assert
-    failing_block_assertion_test("false is false.") { false }
+    failing_block_assertion_test('false is false.') { false }
   end
 
   def test_operator_equals_assert
@@ -33,25 +31,21 @@ class AssertTest < Test::Unit::TestCase
   def test_assert_with_custom_message
     foo = false
     begin
-      assert("We want foo") { foo }
+      assert('We want foo') { foo }
     rescue Exception => e
       assert_equal "We want foo.\nfoo is false.", e.message
     end
   end
 
   def test_blockless_assert
-    begin
-      assert false
-    rescue Exception => e
-      assert_equal "<false> is not true.", e.message
-    end
+    assert false
+  rescue Exception => e
+    assert_equal '<false> is not true.', e.message
   end
 
   def test_blockless_assert_with_custom_message
-    begin
-      assert false, "We want the truth"
-    rescue Exception => e
-      assert_equal "We want the truth.\n<false> is not true.", e.message
-    end
+    assert false, 'We want the truth'
+  rescue Exception => e
+    assert_equal "We want the truth.\n<false> is not true.", e.message
   end
 end

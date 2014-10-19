@@ -10,11 +10,6 @@
 Lint/RescueException:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/StringConversionInInterpolation:
-  Enabled: false
-
 # Offense count: 2
 Metrics/BlockNesting:
   Max: 4
@@ -70,45 +65,12 @@ Style/IfUnlessModifier:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/RedundantBegin:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
 # Configuration parameters: AllowMultipleReturnValues.
 Style/RedundantReturn:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/RedundantSelf:
   Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/SignalException:
-  Enabled: false
-
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-# Offense count: 65
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
   Enabled: false

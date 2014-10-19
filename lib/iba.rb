@@ -130,9 +130,7 @@ module Iba
       else
         str = rcv == '' ? '' : "#{rcv}."
         str << @_method.to_s
-        unless @_args.empty?
-          str << "(#{args.join(', ')})"
-        end
+        str << "(#{args.join(', ')})" unless @_args.empty?
         str
       end
     end

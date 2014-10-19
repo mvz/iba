@@ -47,8 +47,3 @@ Style/ClassAndModuleChildren:
 # Offense count: 6
 Style/Documentation:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundBody:
-  Enabled: false

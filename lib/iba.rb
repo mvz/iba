@@ -38,7 +38,6 @@ module Iba
         "#{str} is #{eval(str, @block.binding).inspect}"
       end
     end
-
   end
 
   class EmptyExpression

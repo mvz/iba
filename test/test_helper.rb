@@ -6,6 +6,6 @@ class Test::Unit::TestCase
   include Iba::BlockAssertion
 
   def combinator &blk
-    return Iba::Combinator.new(&blk)
+    Iba::Combinator.new(&blk)
   end
 end

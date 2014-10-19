@@ -57,9 +57,3 @@ Style/EmptyLinesAroundBody:
 # Configuration parameters: MaxLineLength.
 Style/IfUnlessModifier:
   Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Enabled: false

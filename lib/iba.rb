@@ -43,7 +43,7 @@ module Iba
 
   class EmptyExpression
     def method_missing method, *args
-      return MethodCallExpression.new self, method, args
+      MethodCallExpression.new self, method, args
     end
 
     def _parse &blk
@@ -139,7 +139,7 @@ module Iba
 
     def method_missing method, *args
       super if method.to_s =~ /^_/
-      return MethodCallExpression.new self, method, args
+      MethodCallExpression.new self, method, args
     end
 
     def method_is_operator?

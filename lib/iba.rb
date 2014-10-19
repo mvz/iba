@@ -18,7 +18,7 @@ module Iba
 
     def analyse
       str = "#{self} is #{call.inspect}"
-      if expression.class == MethodCallExpression and expression._method == :==
+      if expression.class == MethodCallExpression && expression._method == :==
         lft = expression._reciever
         rgt = expression._args.first
         exprs = [lft, rgt].map { |e| display_subexpression e }.compact

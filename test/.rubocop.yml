@@ -4,3 +4,7 @@ inherit_from: ../.rubocop.yml
 # TODO: Remove once support for Ruby 1.8 is dropped.
 Lint/RescueException:
   Enabled: false
+
+# Allow compact syntax when adding to Test::Unit::TestCase
+Style/ClassAndModuleChildren:
+  Enabled: false

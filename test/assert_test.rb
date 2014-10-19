@@ -39,7 +39,7 @@ class AssertTest < Test::Unit::TestCase
     end
   end
 
-  def test_original_assert
+  def test_blockless_assert
     begin
       assert false
     rescue Exception => e
@@ -47,7 +47,7 @@ class AssertTest < Test::Unit::TestCase
     end
   end
 
-  def test_original_assert_with_custom_message
+  def test_blockless_assert_with_custom_message
     begin
       assert false, "We want the truth"
     rescue Exception => e
@@ -55,4 +55,3 @@ class AssertTest < Test::Unit::TestCase
     end
   end
 end
-

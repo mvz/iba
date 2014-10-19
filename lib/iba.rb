@@ -175,10 +175,27 @@ module BlockAssertion
       else
         msg = args.empty? ? "" : args.first
 	ana = Combinator.new(&Proc.new).analyse
-	assert_block(build_message(msg, "#{ana}.")) { false }
+        assert_block(iba_message msg, ana) { false }
       end
     else
-      super
+      if RUBY_VERSION < "1.9"
+        super
+      else
+        test, msg = *args
+        case msg
+        when nil, String
+          msg = iba_message(msg, "<false> is not true")
+        end
+        super test, msg
+      end
+    end
+  end
+
+  def iba_message(msg, ana)
+    if RUBY_VERSION < "1.9"
+      build_message msg, "#{ana}."
+    else
+      message(msg) { ana }
     end
   end
 end

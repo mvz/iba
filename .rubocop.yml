@@ -10,4 +10,8 @@ Style/HashSyntax:
 Style/MethodDefParentheses:
   EnforcedStyle: require_no_parentheses
 
+# Always use raise to raise exceptions
+Style/SignalException:
+  EnforcedStyle: only_raise
+
 inherit_from: .rubocop_todo.yml

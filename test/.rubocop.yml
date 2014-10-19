@@ -1,0 +1,10 @@
+inherit_from: ../.rubocop.yml
+
+# We need to rescue Exception to test exceptions thrown by assert
+# TODO: Remove once support for Ruby 1.8 is dropped.
+Lint/RescueException:
+  Enabled: false
+
+# Allow compact syntax when adding to Test::Unit::TestCase
+Style/ClassAndModuleChildren:
+  Enabled: false

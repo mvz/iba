@@ -1,0 +1,21 @@
+# Using eval is the bread and butter of Iba
+Lint/Eval:
+  Enabled: false
+
+# Be relatively lenient with line length
+Metrics/LineLength:
+  Max: 92
+
+# Support Ruby 1.8
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+# Prefer no parentheses in method definitions
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+
+# Always use raise to raise exceptions
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+inherit_from: .rubocop_todo.yml

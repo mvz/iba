@@ -5,10 +5,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 7
-Lint/Eval:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Lint/RescueException:
@@ -67,21 +63,9 @@ Style/Documentation:
 Style/EmptyLinesAroundBody:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: SupportedStyles.
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
 # Offense count: 1
 # Configuration parameters: MaxLineLength.
 Style/IfUnlessModifier:
-  Enabled: false
-
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/MethodDefParentheses:
   Enabled: false
 
 # Offense count: 3

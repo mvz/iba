@@ -1,1 +1,13 @@
+# Using eval is the bread and butter of Iba
+Lint/Eval:
+  Enabled: false
+
+# Support Ruby 1.8
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+# Prefer no parentheses in method definitions
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+
 inherit_from: .rubocop_todo.yml

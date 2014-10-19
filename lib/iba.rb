@@ -167,35 +167,43 @@ module Iba
   end
 
   module BlockAssertion
-    def assert *args
-      if block_given?
-        if yield
-          assert_block("true") { true }
+    if RUBY_VERSION < "1.9"
+
+      def assert *args
+        if block_given?
+          if yield
+            assert_block("true") { true }
+          else
+            msg = args.empty? ? "" : args.first
+            ana = Combinator.new(&Proc.new).analyse
+            assert_block(build_message msg, "#{ana}.") { false }
+          end
         else
-          msg = args.empty? ? "" : args.first
-          ana = Combinator.new(&Proc.new).analyse
-          assert_block(iba_message msg, ana) { false }
-        end
-      else
-        if RUBY_VERSION < "1.9"
           super
+        end
+      end
+
+    else
+
+      def assert *args
+        if block_given?
+          if yield
+            assert_block("true") { true }
+          else
+            msg = args.empty? ? "" : args.first
+            ana = Combinator.new(&Proc.new).analyse
+            assert_block(message(msg) { ana }) { false }
+          end
         else
           test, msg = *args
           case msg
           when nil, String
-            msg = iba_message(msg, "<false> is not true")
+            msg = message(msg) { "<false> is not true" }
           end
           super test, msg
         end
       end
-    end
 
-    def iba_message(msg, ana)
-      if RUBY_VERSION < "1.9"
-        build_message msg, "#{ana}."
-      else
-        message(msg) { ana }
-      end
     end
   end
 end

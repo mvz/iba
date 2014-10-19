@@ -13,11 +13,6 @@ Metrics/BlockNesting:
 Metrics/CyclomaticComplexity:
   Max: 8
 
-# Offense count: 5
-# Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
-  Max: 118
-
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/MethodLength:

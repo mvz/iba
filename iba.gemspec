@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
 
   s.summary = 'Introspective Block Assertions'
   s.description = 'Asserts blocks, prints introspective failure messages.'
+  s.required_ruby_version = '>= 1.9.3'
 
   s.authors = ['Matijs van Zuijlen']
   s.email = ['matijs@matijs.net']

@@ -10,6 +10,8 @@ Gem::Specification.new do |s|
   s.email = ['matijs@matijs.net']
   s.homepage = 'http://www.github.com/mvz/iba'
 
+  s.license = 'LGPL-3'
+
   s.rdoc_options = ['--main', 'README.rdoc']
 
   s.files = Dir['{lib,test,tasks}/**/*', 'COPYING.*', 'LICENSE', '*.rdoc', 'Rakefile'] &

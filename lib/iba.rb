@@ -168,16 +168,12 @@ module Iba
         if yield
           assert_block('true') { true }
         else
-          msg = args.empty? ? '' : args.first
+          msg = args.empty? ? '' : "#{args.first}.\n"
           ana = Combinator.new(&Proc.new).analyse
-          assert_block(message(msg) { ana }) { false }
+          assert_block("#{msg}#{ana}.") { false }
         end
       else
         test, msg = *args
-        case msg
-        when nil, String
-          msg = message(msg) { '<false> is not true' }
-        end
         super test, msg
       end
     end

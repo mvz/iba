@@ -3,17 +3,17 @@ rvm:
   - 2.1.9
   - 2.2.6
   - 2.3.3
-  - jruby-9.1
+  - jruby-9.1.6.0
   - jruby-head
-  - rbx-3.69
+  - rubinius-3.69
   - ruby-head
   - ruby-head-clang
 before_install:
-  - gem update bundler
+  - gem install bundler
 matrix:
   allow_failures:
-    - rvm: jruby-9.1
+    - rvm: jruby-9.1.6.0
     - rvm: jruby-head
-    - rvm: rbx-3.69
+    - rvm: rubinius-3.69
     - rvm: ruby-head
     - rvm: ruby-head-clang

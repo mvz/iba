@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -z -- test`.split("\0")
 
   s.add_development_dependency('rake', ['~> 12.0'])
-  s.add_development_dependency('test-unit', ['~> 3.1.5'])
+  s.add_development_dependency('test-unit', ['~> 3.1'])
 
   s.require_paths = ['lib']
 end

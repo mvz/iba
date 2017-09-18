@@ -11,7 +11,7 @@ class DisplayTest < Test::Unit::TestCase
   end
 
   def test_literal_string
-    assert_equal "\"aa\"", combinator { 'aa' }.to_s
+    assert_equal '"aa"', combinator { 'aa' }.to_s
   end
 
   def test_method_calls

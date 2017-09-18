@@ -1,7 +1,7 @@
 # Time notification will be displayed before disappearing automatically
 EXPIRATION_IN_SECONDS = 2
-ERROR_STOCK_ICON = "gtk-dialog-error"
-SUCCESS_STOCK_ICON = "gtk-dialog-info"
+ERROR_STOCK_ICON = 'gtk-dialog-error'.freeze
+SUCCESS_STOCK_ICON = 'gtk-dialog-info'.freeze
 
 # Convenience method to send an error notification message
 #
@@ -14,12 +14,11 @@ def notify stock_icon, title, message
 end
 
 def test_and_notify
-  if system "rake test"
-    notify SUCCESS_STOCK_ICON, "Green", "All tests passed, good job!"
+  if system 'rake test'
+    notify SUCCESS_STOCK_ICON, 'Green', 'All tests passed, good job!'
   else
-    notify ERROR_STOCK_ICON, "Red", "Some tests failed"
+    notify ERROR_STOCK_ICON, 'Red', 'Some tests failed'
   end
 end
 
-watch( '(lib|test)/.*\.rb' ) { |md| test_and_notify } 
-
+watch('(lib|test)/.*\.rb') { |_md| test_and_notify }

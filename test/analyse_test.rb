@@ -32,7 +32,7 @@ class AnalyseTest < Test::Unit::TestCase
 
   def test_string_variable
     foo = 'blub'
-    assert_equal "foo is \"blub\"", combinator { foo }.analyse
+    assert_equal 'foo is "blub"', combinator { foo }.analyse
   end
 
   def test_array_variable

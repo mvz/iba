@@ -18,12 +18,12 @@ class AssertTest < Test::Unit::TestCase
 
   def test_operator_equals_assert
     foo = 24
-    failing_block_assertion_test("(foo == 23) is false\nfoo is 24.") { foo == 23  }
+    failing_block_assertion_test("(foo == 23) is false\nfoo is 24.") { foo == 23 }
   end
 
   def test_instance_variable_assert
     @foo = 24
-    failing_block_assertion_test("(@foo == 23) is false\n@foo is 24.") { @foo == 23  }
+    failing_block_assertion_test("(@foo == 23) is false\n@foo is 24.") { @foo == 23 }
   end
 
   # Special cases

@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'iba'
   s.version = '0.0.3'

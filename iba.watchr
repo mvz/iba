@@ -21,5 +21,5 @@ def test_and_notify
   end
 end
 
-watch('(lib|test)/.*\.rb') { |md| test_and_notify } 
+watch('(lib|test)/.*\.rb') { |_md| test_and_notify } 
 

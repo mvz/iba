@@ -22,4 +22,3 @@ def test_and_notify
 end
 
 watch('(lib|test)/.*\.rb') { |_md| test_and_notify }
-

@@ -143,7 +143,7 @@ module Iba
 
       if @_method == :[]
         "#{rcv}[#{args[0]}]"
-      elsif method_is_operator?
+      elsif _method_is_operator?
         case @_args.length
         when 0
           "#{@_method.to_s.sub(/@$/, '')}#{rcv}"
@@ -160,11 +160,11 @@ module Iba
       end
     end
 
-    def method_is_operator?
+    private
+
+    def _method_is_operator?
       @_method.to_s !~ /^[a-z]/
     end
-
-    private
 
     def _wrap arg
       if arg.class == MethodCallExpression

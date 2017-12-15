@@ -1,3 +1,7 @@
+# Uniform block layout
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyleForEmptyBraces: space
+
 # Be relatively lenient with line length
 Metrics/LineLength:
   Max: 92

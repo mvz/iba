@@ -40,7 +40,11 @@ module Iba
     end
   end
 
-  class EmptyExpression
+  class BaseExpression
+
+  end
+
+  class EmptyExpression < BaseExpression
     def method_missing method, *args
       super if method.to_s =~ /^_/
       MethodCallExpression.new self, method, args
@@ -61,7 +65,7 @@ module Iba
       _override_local_variables vars, b
 
       result = instance_eval(&blk)
-      result = LiteralExpression.new(result) unless result.class == MethodCallExpression
+      result = LiteralExpression.new(result) unless result.is_a? BaseExpression
 
       _restore_local_variables vars, b
 
@@ -99,7 +103,7 @@ module Iba
     end
   end
 
-  class LiteralExpression
+  class LiteralExpression < BaseExpression
     def initialize val
       @value = val
     end
@@ -109,7 +113,7 @@ module Iba
     end
   end
 
-  class MethodCallExpression
+  class MethodCallExpression < BaseExpression
     attr_reader :_method, :_reciever, :_args
 
     def initialize reciever, methodname, args

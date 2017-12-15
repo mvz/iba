@@ -74,9 +74,7 @@ module Iba
     def _override_instance_variables vars
       vars.each do |v|
         next if v =~ /^@_/
-        instance_variable_set v, Iba::MethodCallExpression.new(Iba::EmptyExpression.new,
-                                                               v.to_sym,
-                                                               [])
+        instance_variable_set v, Iba::InstanceVariableExpression.new(v.to_sym)
       end
     end
 
@@ -109,6 +107,24 @@ module Iba
 
     def _to_s
       @value.inspect
+    end
+  end
+
+  class InstanceVariableExpression < BaseExpression
+    def initialize ivar_name
+      @_ivar_name = ivar_name
+    end
+
+    def _to_s
+      @_ivar_name.to_s
+    end
+
+    def to_s
+      method_missing :to_s
+    end
+
+    def == other
+      method_missing :==, other
     end
   end
 

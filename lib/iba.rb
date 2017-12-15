@@ -58,6 +58,14 @@ module Iba
     def == other
       method_missing :==, other
     end
+
+    def _wrap arg
+      if arg.is_a? BaseExpression
+        arg
+      else
+        LiteralExpression.new arg
+      end
+    end
   end
 
   class EmptyExpression < BaseExpression
@@ -72,7 +80,7 @@ module Iba
       _override_local_variables vars, b
 
       result = instance_eval(&blk)
-      result = LiteralExpression.new(result) unless result.is_a? BaseExpression
+      result = _wrap(result)
 
       _restore_local_variables vars, b
 
@@ -164,14 +172,6 @@ module Iba
 
     def _method_is_operator?
       @_method.to_s !~ /^[a-z]/
-    end
-
-    def _wrap arg
-      if arg.class == MethodCallExpression
-        arg
-      else
-        LiteralExpression.new arg
-      end
     end
   end
 

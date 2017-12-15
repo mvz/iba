@@ -35,7 +35,8 @@ module Iba
         nil
       else
         str = expr._to_s
-        "#{str} is #{@block.binding.eval(str).inspect}"
+        value = expr._evaluate(@block.binding).inspect
+        "#{str} is #{value}"
       end
     end
   end
@@ -126,6 +127,10 @@ module Iba
     def _to_s
       @value.inspect
     end
+
+    def _evaluate _bnd
+      @value
+    end
   end
 
   class InstanceVariableExpression < BaseExpression
@@ -136,6 +141,10 @@ module Iba
     def _to_s
       @_ivar_name.to_s
     end
+
+    def _evaluate bnd
+      bnd.receiver.instance_variable_get @_ivar_name
+    end
   end
 
   class LocalVariableExpression < BaseExpression
@@ -145,6 +154,10 @@ module Iba
 
     def _to_s
       @_lvar_name.to_s
+    end
+
+    def _evaluate bnd
+      bnd.local_variable_get @_lvar_name
     end
   end
 
@@ -178,6 +191,12 @@ module Iba
         str << "(#{args.join(', ')})" unless @_args.empty?
         str
       end
+    end
+
+    def _evaluate bnd
+      rcv = @_reciever._evaluate(bnd)
+      args = @_args.map { |arg| arg._evaluate(bnd) }
+      rcv.send @_method, *args
     end
 
     private

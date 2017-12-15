@@ -35,7 +35,7 @@ module Iba
         nil
       else
         str = expr._to_s
-        "#{str} is #{eval(str, @block.binding).inspect}"
+        "#{str} is #{@block.binding.eval(str).inspect}"
       end
     end
   end

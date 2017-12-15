@@ -64,4 +64,15 @@ class AnalyseTest < Test::Unit::TestCase
     @foo = 23
     assert_equal '(23 + @foo) is 46', combinator { 23 + @foo }.analyse
   end
+
+  def test_complex_subexpressions
+    @foo = 23
+    bar = 42
+    baz = [42]
+    result = combinator { (@foo + baz.first) == (bar + 23) }.analyse
+    assert_equal \
+      "((@foo + baz.first) == (bar + 23)) is true\n" \
+      '(@foo + baz.first) is 65, (bar + 23) is 65',
+      result
+  end
 end

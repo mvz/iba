@@ -66,6 +66,10 @@ module Iba
         LiteralExpression.new arg
       end
     end
+
+    def coerce other
+      [_wrap(other), self]
+    end
   end
 
   class EmptyExpression < BaseExpression

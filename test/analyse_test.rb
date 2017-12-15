@@ -54,4 +54,14 @@ class AnalyseTest < Test::Unit::TestCase
     @foo = 23
     assert_equal '@foo is 23', combinator { @foo }.analyse
   end
+
+  def test_instance_variable_method_call
+    @foo = 23
+    assert_equal "(@foo == 23) is true\n@foo is 23", combinator { @foo == 23 }.analyse
+  end
+
+  def test_instance_variable_as_argument_of_operator
+    @foo = 23
+    assert_equal '(23 + @foo) is 46', combinator { 23 + @foo }.analyse
+  end
 end

@@ -41,19 +41,18 @@ module Iba
   end
 
   class BaseExpression
-
-  end
-
-  class EmptyExpression < BaseExpression
     def method_missing method, *args
       super if method.to_s =~ /^_/
       MethodCallExpression.new self, method, args
     end
 
-    def respond_to_missing? _method
+    def respond_to_missing? method
+      return false if method.to_s =~ /^_/
       true
     end
+  end
 
+  class EmptyExpression < BaseExpression
     def _parse &blk
       b = blk.binding
 
@@ -143,15 +142,6 @@ module Iba
         str << "(#{args.join(', ')})" unless @_args.empty?
         str
       end
-    end
-
-    def method_missing method, *args
-      super if method.to_s =~ /^_/
-      MethodCallExpression.new self, method, args
-    end
-
-    def respond_to_missing? _method
-      true
     end
 
     def method_is_operator?

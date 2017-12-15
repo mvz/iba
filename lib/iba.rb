@@ -61,9 +61,7 @@ module Iba
       _override_local_variables vars, b
 
       result = instance_eval(&blk)
-      unless result.class == MethodCallExpression
-        result = LiteralExpression.new(result)
-      end
+      result = LiteralExpression.new(result) unless result.class == MethodCallExpression
 
       _restore_local_variables vars, b
 

@@ -53,8 +53,8 @@ module Iba
     def _parse &blk
       b = blk.binding
 
-      vars = eval 'local_variables', b
-      ivars = eval 'instance_variables', b
+      vars = b.local_variables
+      ivars = b.receiver.instance_variables
 
       _override_instance_variables ivars
 
@@ -71,22 +71,26 @@ module Iba
     def _override_instance_variables vars
       vars.each do |v|
         next if v =~ /^@_/
-        eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])"
+        instance_variable_set v, Iba::MethodCallExpression.new(Iba::EmptyExpression.new,
+                                                               v.to_sym,
+                                                               [])
       end
     end
 
     def _override_local_variables vars, b
       vars.each do |v|
         next if v =~ /^_/
-        eval "_#{v} = #{v}", b
-        eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])", b
+        b.local_variable_set "_#{v}", b.local_variable_get(v)
+        b.local_variable_set v, Iba::MethodCallExpression.new(Iba::EmptyExpression.new,
+                                                              v.to_sym,
+                                                              [])
       end
     end
 
     def _restore_local_variables vars, b
       vars.each do |v|
         next if v =~ /^_/
-        eval "#{v} = _#{v}", b
+        b.local_variable_set v, b.local_variable_get("_#{v}")
       end
     end
 

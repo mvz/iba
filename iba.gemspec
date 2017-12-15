@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'iba'
-  s.version = '0.0.3'
+  s.version = '0.0.4'
 
   s.summary = 'Introspective Block Assertions'
   s.description = 'Asserts blocks, prints introspective failure messages.'

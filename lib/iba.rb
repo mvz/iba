@@ -50,6 +50,14 @@ module Iba
       return false if method.to_s =~ /^_/
       true
     end
+
+    def to_s
+      method_missing :to_s
+    end
+
+    def == other
+      method_missing :==, other
+    end
   end
 
   class EmptyExpression < BaseExpression
@@ -118,14 +126,6 @@ module Iba
     def _to_s
       @_ivar_name.to_s
     end
-
-    def to_s
-      method_missing :to_s
-    end
-
-    def == other
-      method_missing :==, other
-    end
   end
 
   class MethodCallExpression < BaseExpression
@@ -162,14 +162,6 @@ module Iba
 
     def method_is_operator?
       @_method.to_s !~ /^[a-z]/
-    end
-
-    def to_s
-      method_missing :to_s
-    end
-
-    def == other
-      method_missing :==, other
     end
 
     private

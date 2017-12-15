@@ -102,9 +102,7 @@ module Iba
       vars.each do |v|
         next if v =~ /^_/
         b.local_variable_set "_#{v}", b.local_variable_get(v)
-        b.local_variable_set v, Iba::MethodCallExpression.new(Iba::EmptyExpression.new,
-                                                              v.to_sym,
-                                                              [])
+        b.local_variable_set v, LocalVariableExpression.new(v.to_sym)
       end
     end
 
@@ -137,6 +135,16 @@ module Iba
 
     def _to_s
       @_ivar_name.to_s
+    end
+  end
+
+  class LocalVariableExpression < BaseExpression
+    def initialize lvar_name
+      @_lvar_name = lvar_name
+    end
+
+    def _to_s
+      @_lvar_name.to_s
     end
   end
 

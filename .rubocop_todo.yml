@@ -29,8 +29,3 @@ Style/Documentation:
     - 'spec/**/*'
     - 'test/**/*'
     - 'lib/iba.rb'
-
-# Offense count: 6
-Style/EvalWithLocation:
-  Exclude:
-    - 'lib/iba.rb'

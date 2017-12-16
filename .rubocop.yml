@@ -9,10 +9,6 @@ Layout/SpaceBeforeBlockBraces:
 Metrics/LineLength:
   Max: 92
 
-# Using eval is the bread and butter of Iba
-Security/Eval:
-  Enabled: false
-
 # Prefer no parentheses in method definitions
 Style/MethodDefParentheses:
   EnforcedStyle: require_no_parentheses

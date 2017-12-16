@@ -35,33 +35,57 @@ module Iba
         nil
       else
         str = expr._to_s
-        "#{str} is #{eval(str, @block.binding).inspect}"
+        value = expr._evaluate(@block.binding).inspect
+        "#{str} is #{value}"
       end
     end
   end
 
-  class EmptyExpression
+  class BaseExpression
     def method_missing method, *args
       super if method.to_s =~ /^_/
       MethodCallExpression.new self, method, args
     end
 
-    def respond_to_missing? _method
+    def respond_to_missing? method
+      return false if method.to_s =~ /^_/
       true
     end
 
+    def to_s
+      method_missing :to_s
+    end
+
+    def == other
+      method_missing :==, other
+    end
+
+    def _wrap arg
+      if arg.is_a? BaseExpression
+        arg
+      else
+        LiteralExpression.new arg
+      end
+    end
+
+    def coerce other
+      [_wrap(other), self]
+    end
+  end
+
+  class EmptyExpression < BaseExpression
     def _parse &blk
       b = blk.binding
 
-      vars = eval 'local_variables', b
-      ivars = eval 'instance_variables', b
+      vars = b.local_variables
+      ivars = b.receiver.instance_variables
 
       _override_instance_variables ivars
 
       _override_local_variables vars, b
 
       result = instance_eval(&blk)
-      result = LiteralExpression.new(result) unless result.class == MethodCallExpression
+      result = _wrap(result)
 
       _restore_local_variables vars, b
 
@@ -71,22 +95,22 @@ module Iba
     def _override_instance_variables vars
       vars.each do |v|
         next if v =~ /^@_/
-        eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])"
+        instance_variable_set v, Iba::InstanceVariableExpression.new(v.to_sym)
       end
     end
 
     def _override_local_variables vars, b
       vars.each do |v|
         next if v =~ /^_/
-        eval "_#{v} = #{v}", b
-        eval "#{v} = Iba::MethodCallExpression.new(Iba::EmptyExpression.new, :#{v}, [])", b
+        b.local_variable_set "_#{v}", b.local_variable_get(v)
+        b.local_variable_set v, LocalVariableExpression.new(v.to_sym)
       end
     end
 
     def _restore_local_variables vars, b
       vars.each do |v|
         next if v =~ /^_/
-        eval "#{v} = _#{v}", b
+        b.local_variable_set v, b.local_variable_get("_#{v}")
       end
     end
 
@@ -95,7 +119,7 @@ module Iba
     end
   end
 
-  class LiteralExpression
+  class LiteralExpression < BaseExpression
     def initialize val
       @value = val
     end
@@ -103,9 +127,41 @@ module Iba
     def _to_s
       @value.inspect
     end
+
+    def _evaluate _bnd
+      @value
+    end
   end
 
-  class MethodCallExpression
+  class InstanceVariableExpression < BaseExpression
+    def initialize ivar_name
+      @_ivar_name = ivar_name
+    end
+
+    def _to_s
+      @_ivar_name.to_s
+    end
+
+    def _evaluate bnd
+      bnd.receiver.instance_variable_get @_ivar_name
+    end
+  end
+
+  class LocalVariableExpression < BaseExpression
+    def initialize lvar_name
+      @_lvar_name = lvar_name
+    end
+
+    def _to_s
+      @_lvar_name.to_s
+    end
+
+    def _evaluate bnd
+      bnd.local_variable_get @_lvar_name
+    end
+  end
+
+  class MethodCallExpression < BaseExpression
     attr_reader :_method, :_reciever, :_args
 
     def initialize reciever, methodname, args
@@ -120,7 +176,7 @@ module Iba
 
       if @_method == :[]
         "#{rcv}[#{args[0]}]"
-      elsif method_is_operator?
+      elsif _method_is_operator?
         case @_args.length
         when 0
           "#{@_method.to_s.sub(/@$/, '')}#{rcv}"
@@ -137,35 +193,16 @@ module Iba
       end
     end
 
-    def method_missing method, *args
-      super if method.to_s =~ /^_/
-      MethodCallExpression.new self, method, args
-    end
-
-    def respond_to_missing? _method
-      true
-    end
-
-    def method_is_operator?
-      @_method.to_s !~ /^[a-z]/
-    end
-
-    def to_s
-      method_missing :to_s
-    end
-
-    def == other
-      method_missing :==, other
+    def _evaluate bnd
+      rcv = @_reciever._evaluate(bnd)
+      args = @_args.map { |arg| arg._evaluate(bnd) }
+      rcv.send @_method, *args
     end
 
     private
 
-    def _wrap arg
-      if arg.class == MethodCallExpression
-        arg
-      else
-        LiteralExpression.new arg
-      end
+    def _method_is_operator?
+      @_method.to_s !~ /^[a-z]/
     end
   end
 

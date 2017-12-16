@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.2
 
 # Uniform block layout
 Layout/SpaceBeforeBlockBraces:
@@ -8,10 +8,6 @@ Layout/SpaceBeforeBlockBraces:
 # Be relatively lenient with line length
 Metrics/LineLength:
   Max: 92
-
-# Using eval is the bread and butter of Iba
-Security/Eval:
-  Enabled: false
 
 # Prefer no parentheses in method definitions
 Style/MethodDefParentheses:

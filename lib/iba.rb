@@ -75,19 +75,19 @@ module Iba
 
   class EmptyExpression < BaseExpression
     def _parse &blk
-      b = blk.binding
+      bnd = blk.binding
 
-      vars = b.local_variables
-      ivars = b.receiver.instance_variables
+      vars = bnd.local_variables
+      ivars = bnd.receiver.instance_variables
 
       _override_instance_variables ivars
 
-      _override_local_variables vars, b
+      _override_local_variables vars, bnd
 
       result = instance_eval(&blk)
       result = _wrap(result)
 
-      _restore_local_variables vars, b
+      _restore_local_variables vars, bnd
 
       result
     end
@@ -99,18 +99,18 @@ module Iba
       end
     end
 
-    def _override_local_variables vars, b
+    def _override_local_variables vars, bnd
       vars.each do |v|
         next if v =~ /^_/
-        b.local_variable_set "_#{v}", b.local_variable_get(v)
-        b.local_variable_set v, LocalVariableExpression.new(v.to_sym)
+        bnd.local_variable_set "_#{v}", bnd.local_variable_get(v)
+        bnd.local_variable_set v, LocalVariableExpression.new(v.to_sym)
       end
     end
 
-    def _restore_local_variables vars, b
+    def _restore_local_variables vars, bnd
       vars.each do |v|
         next if v =~ /^_/
-        b.local_variable_set v, b.local_variable_get("_#{v}")
+        bnd.local_variable_set v, bnd.local_variable_get("_#{v}")
       end
     end
 

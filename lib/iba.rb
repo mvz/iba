@@ -49,6 +49,7 @@ module Iba
 
     def respond_to_missing? method
       return false if method.to_s =~ /^_/
+
       true
     end
 
@@ -95,6 +96,7 @@ module Iba
     def _override_instance_variables vars
       vars.each do |v|
         next if v =~ /^@_/
+
         instance_variable_set v, Iba::InstanceVariableExpression.new(v.to_sym)
       end
     end
@@ -102,6 +104,7 @@ module Iba
     def _override_local_variables vars, bnd
       vars.each do |v|
         next if v =~ /^_/
+
         bnd.local_variable_set "_#{v}", bnd.local_variable_get(v)
         bnd.local_variable_set v, LocalVariableExpression.new(v.to_sym)
       end
@@ -110,6 +113,7 @@ module Iba
     def _restore_local_variables vars, bnd
       vars.each do |v|
         next if v =~ /^_/
+
         bnd.local_variable_set v, bnd.local_variable_get("_#{v}")
       end
     end

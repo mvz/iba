@@ -2,10 +2,12 @@ dist: trusty
 language: ruby
 rvm:
   - 2.2.6
-  - 2.3.3
-  - 2.4.2
-  - 2.5
+  - 2.3.8
+  - 2.4.5
+  - 2.5.3
+  - 2.6.0
   - jruby-9.1.6.0
+  - jruby-9.2.5.0
   - jruby-head
   - rubinius-3.69
   - ruby-head
@@ -15,6 +17,7 @@ before_install:
 matrix:
   allow_failures:
     - rvm: jruby-9.1.6.0
+    - rvm: jruby-9.2.5.0
     - rvm: jruby-head
     - rvm: rubinius-3.69
     - rvm: ruby-head

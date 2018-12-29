@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Iba
   class Combinator
     def initialize &blk
@@ -17,7 +19,7 @@ module Iba
     end
 
     def analyse
-      str = "#{self} is #{call.inspect}"
+      str = +"#{self} is #{call.inspect}"
       if expression.class == MethodCallExpression && expression._method == :==
         lft = expression._reciever
         rgt = expression._args.first
@@ -190,7 +192,7 @@ module Iba
           raise NotImplementedError
         end
       else
-        str = rcv == '' ? '' : "#{rcv}."
+        str = rcv == '' ? +'' : +"#{rcv}."
         str << @_method.to_s
         str << "(#{args.join(', ')})" unless @_args.empty?
         str

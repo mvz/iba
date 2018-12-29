@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 Gem::Specification.new do |s|
   s.name = 'iba'
   s.version = '0.0.5'
 
   s.summary = 'Introspective Block Assertions'
   s.description = 'Asserts blocks, prints introspective failure messages.'
-  s.required_ruby_version = '>= 2.2.0'
+  s.required_ruby_version = '>= 2.3.0'
 
   s.authors = ['Matijs van Zuijlen']
   s.email = ['matijs@matijs.net']

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'test_helper'
 
 # Test how the combinator analyses the parsed block contents.

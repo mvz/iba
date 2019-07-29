@@ -45,12 +45,12 @@ module Iba
 
   class BaseExpression
     def method_missing method, *args
-      super if method.to_s =~ /^_/
+      super if /^_/.match?(method.to_s)
       MethodCallExpression.new self, method, args
     end
 
     def respond_to_missing? method
-      return false if method.to_s =~ /^_/
+      return false if /^_/.match?(method.to_s)
 
       true
     end
@@ -97,7 +97,7 @@ module Iba
 
     def _override_instance_variables vars
       vars.each do |v|
-        next if v =~ /^@_/
+        next if /^@_/.match?(v)
 
         instance_variable_set v, Iba::InstanceVariableExpression.new(v.to_sym)
       end
@@ -105,7 +105,7 @@ module Iba
 
     def _override_local_variables vars, bnd
       vars.each do |v|
-        next if v =~ /^_/
+        next if /^_/.match?(v)
 
         bnd.local_variable_set "_#{v}", bnd.local_variable_get(v)
         bnd.local_variable_set v, LocalVariableExpression.new(v.to_sym)
@@ -114,7 +114,7 @@ module Iba
 
     def _restore_local_variables vars, bnd
       vars.each do |v|
-        next if v =~ /^_/
+        next if /^_/.match?(v)
 
         bnd.local_variable_set v, bnd.local_variable_get("_#{v}")
       end

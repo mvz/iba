@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc', 'LICENSE', 'COPYING.LESSER']
   s.test_files = `git ls-files -z -- test`.split("\0")
 
-  s.add_development_dependency('rake', ['~> 12.0'])
+  s.add_development_dependency('rake', ['~> 13.0'])
   s.add_development_dependency('test-unit', ['~> 3.1'])
 
   s.require_paths = ['lib']

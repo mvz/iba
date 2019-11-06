@@ -10,8 +10,7 @@ rvm:
   - rubinius-3.69
   - ruby-head
   - ruby-head-clang
-before_install:
-  - gem install bundler
+
 matrix:
   allow_failures:
     - rvm: jruby-9.1.6.0
@@ -20,6 +19,7 @@ matrix:
     - rvm: rubinius-3.69
     - rvm: ruby-head
     - rvm: ruby-head-clang
+
 branches:
   only:
     - master

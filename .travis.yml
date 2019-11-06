@@ -13,9 +13,7 @@ rvm:
 
 matrix:
   allow_failures:
-    - rvm: jruby-9.2.8.0
     - rvm: jruby-head
-    - rvm: rubinius-4.6
     - rvm: ruby-head
     - rvm: ruby-head-clang
 

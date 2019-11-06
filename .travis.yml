@@ -2,22 +2,20 @@ dist: xenial
 language: ruby
 
 rvm:
-  - 2.4.5
-  - 2.5.3
-  - 2.6.0
-  - jruby-9.1.6.0
-  - jruby-9.2.5.0
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
+  - jruby-9.2.8.0
   - jruby-head
-  - rubinius-3.69
+  - rubinius-4.6
   - ruby-head
   - ruby-head-clang
 
 matrix:
   allow_failures:
-    - rvm: jruby-9.1.6.0
-    - rvm: jruby-9.2.5.0
+    - rvm: jruby-9.2.8.0
     - rvm: jruby-head
-    - rvm: rubinius-3.69
+    - rvm: rubinius-4.6
     - rvm: ruby-head
     - rvm: ruby-head-clang
 

@@ -1,11 +1,15 @@
-dist: xenial
 language: ruby
 
+dist: xenial
+
+cache:
+  bundler: true
+
 rvm:
-  - 2.4.9
-  - 2.5.7
-  - 2.6.5
-  - jruby-9.2.8.0
+  - 2.4
+  - 2.5
+  - 2.6
+  - jruby-9.2
   - jruby-head
   - rubinius-4.6
   - ruby-head

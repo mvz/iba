@@ -2,7 +2,7 @@
 
 module Iba
   class Combinator
-    def initialize &blk
+    def initialize(&blk)
       @block = blk
     end
 
@@ -32,7 +32,7 @@ module Iba
 
     private
 
-    def display_subexpression expr
+    def display_subexpression(expr)
       if expr.class == LiteralExpression
         nil
       else
@@ -44,12 +44,12 @@ module Iba
   end
 
   class BaseExpression
-    def method_missing method, *args
+    def method_missing(method, *args)
       super if /^_/.match?(method.to_s)
       MethodCallExpression.new self, method, args
     end
 
-    def respond_to_missing? method
+    def respond_to_missing?(method)
       return false if /^_/.match?(method.to_s)
 
       true
@@ -59,11 +59,11 @@ module Iba
       method_missing :to_s
     end
 
-    def == other
+    def ==(other)
       method_missing :==, other
     end
 
-    def _wrap arg
+    def _wrap(arg)
       if arg.is_a? BaseExpression
         arg
       else
@@ -71,13 +71,13 @@ module Iba
       end
     end
 
-    def coerce other
+    def coerce(other)
       [_wrap(other), self]
     end
   end
 
   class EmptyExpression < BaseExpression
-    def _parse &blk
+    def _parse(&blk)
       bnd = blk.binding
 
       vars = bnd.local_variables
@@ -95,7 +95,7 @@ module Iba
       result
     end
 
-    def _override_instance_variables vars
+    def _override_instance_variables(vars)
       vars.each do |v|
         next if /^@_/.match?(v)
 
@@ -103,7 +103,7 @@ module Iba
       end
     end
 
-    def _override_local_variables vars, bnd
+    def _override_local_variables(vars, bnd)
       vars.each do |v|
         next if /^_/.match?(v)
 
@@ -112,7 +112,7 @@ module Iba
       end
     end
 
-    def _restore_local_variables vars, bnd
+    def _restore_local_variables(vars, bnd)
       vars.each do |v|
         next if /^_/.match?(v)
 
@@ -126,7 +126,7 @@ module Iba
   end
 
   class LiteralExpression < BaseExpression
-    def initialize val
+    def initialize(val)
       @value = val
     end
 
@@ -134,13 +134,13 @@ module Iba
       @value.inspect
     end
 
-    def _evaluate _bnd
+    def _evaluate(_bnd)
       @value
     end
   end
 
   class InstanceVariableExpression < BaseExpression
-    def initialize ivar_name
+    def initialize(ivar_name)
       @_ivar_name = ivar_name
     end
 
@@ -148,13 +148,13 @@ module Iba
       @_ivar_name.to_s
     end
 
-    def _evaluate bnd
+    def _evaluate(bnd)
       bnd.receiver.instance_variable_get @_ivar_name
     end
   end
 
   class LocalVariableExpression < BaseExpression
-    def initialize lvar_name
+    def initialize(lvar_name)
       @_lvar_name = lvar_name
     end
 
@@ -162,7 +162,7 @@ module Iba
       @_lvar_name.to_s
     end
 
-    def _evaluate bnd
+    def _evaluate(bnd)
       bnd.local_variable_get @_lvar_name
     end
   end
@@ -170,7 +170,7 @@ module Iba
   class MethodCallExpression < BaseExpression
     attr_reader :_method, :_reciever, :_args
 
-    def initialize reciever, methodname, args
+    def initialize(reciever, methodname, args)
       @_reciever = reciever
       @_method = methodname
       @_args = args.map { |a| _wrap(a) }
@@ -199,7 +199,7 @@ module Iba
       end
     end
 
-    def _evaluate bnd
+    def _evaluate(bnd)
       rcv = @_reciever._evaluate(bnd)
       args = @_args.map { |arg| arg._evaluate(bnd) }
       rcv.send @_method, *args
@@ -213,7 +213,7 @@ module Iba
   end
 
   module BlockAssertion
-    def assert *args, &block
+    def assert(*args, &block)
       if block_given?
         if yield
           assert_block('true') { true }

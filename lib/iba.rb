@@ -213,13 +213,13 @@ module Iba
   end
 
   module BlockAssertion
-    def assert *args
+    def assert *args, &block
       if block_given?
         if yield
           assert_block('true') { true }
         else
           msg = args.empty? ? '' : "#{args.first}.\n"
-          ana = Combinator.new(&Proc.new).analyse
+          ana = Combinator.new(&block).analyse
           assert_block("#{msg}#{ana}.") { false }
         end
       else

@@ -25,7 +25,7 @@ module Iba
         rgt = expression._args.first
         exprs = [lft, rgt].map { |e| display_subexpression e }.compact
         str << "\n"
-        str << exprs.join(', ')
+        str << exprs.join(", ")
       end
       str
     end
@@ -121,7 +121,7 @@ module Iba
     end
 
     def _to_s
-      ''
+      ""
     end
   end
 
@@ -192,7 +192,7 @@ module Iba
           raise NotImplementedError
         end
       else
-        str = rcv == '' ? +'' : +"#{rcv}."
+        str = rcv == "" ? +"" : +"#{rcv}."
         str << @_method.to_s
         str << "(#{args.join(', ')})" unless @_args.empty?
         str
@@ -216,9 +216,9 @@ module Iba
     def assert(*args, &block)
       if block_given?
         if yield
-          assert_block('true') { true }
+          assert_block("true") { true }
         else
-          msg = args.empty? ? '' : "#{args.first}.\n"
+          msg = args.empty? ? "" : "#{args.first}.\n"
           ana = Combinator.new(&block).analyse
           assert_block("#{msg}#{ana}.") { false }
         end

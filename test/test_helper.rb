@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'test/unit'
-require 'iba'
+require "test/unit"
+require "iba"
 
 class Test::Unit::TestCase
   include Iba::BlockAssertion

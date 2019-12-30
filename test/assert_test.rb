@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'test_helper'
+require_relative "test_helper"
 
 # Test behavior of overridden assert method.
 class AssertTest < Test::Unit::TestCase
@@ -15,7 +15,7 @@ class AssertTest < Test::Unit::TestCase
   end
 
   def test_simple_failing_assert
-    failing_block_assertion_test('false is false.') { false }
+    failing_block_assertion_test("false is false.") { false }
   end
 
   def test_operator_equals_assert
@@ -33,7 +33,7 @@ class AssertTest < Test::Unit::TestCase
   def test_assert_with_custom_message
     foo = false
     begin
-      assert('We want foo') { foo }
+      assert("We want foo") { foo }
     rescue Exception => e
       assert_equal "We want foo.\nfoo is false.", e.message
     end
@@ -42,11 +42,11 @@ class AssertTest < Test::Unit::TestCase
   def test_blockless_assert
     assert false
   rescue Exception => e
-    assert_equal '<false> is not true.', e.message
+    assert_equal "<false> is not true.", e.message
   end
 
   def test_blockless_assert_with_custom_message
-    assert false, 'We want the truth'
+    assert false, "We want the truth"
   rescue Exception => e
     assert_equal "We want the truth.\n<false> is not true.", e.message
   end

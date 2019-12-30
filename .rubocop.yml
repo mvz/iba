@@ -1,22 +1,53 @@
-require: rubocop-performance
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
 
 AllCops:
   TargetRubyVersion: 2.4
 
-# Uniform block layout
+# Be relatively lenient with line length
+Layout/LineLength:
+  Max: 92
+
+# Don't force lonely closing parentheses
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+# Multi-line method calls should be simply indented. Aligning them makes it
+# even harder to keep a sane line length.
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Multi-line assignment should be simply indented. Aligning them makes it even
+# harder to keep a sane line length.
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+# Force consistent spacing independent of block contents
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
 
-# Be relatively lenient with line length
-Metrics/LineLength:
-  Max: 92
+# Allow if (foo = get_foo) style
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: true
 
-# Prefer no parentheses in method definitions
-Style/MethodDefParentheses:
-  EnforcedStyle: require_no_parentheses
+# Allow and/or for control flow only
+Style/AndOr:
+  EnforcedStyle: conditionals
 
-# Always use raise to raise exceptions
-Style/SignalException:
-  EnforcedStyle: only_raise
+# Require at least two dependent lines before suggesting a guard clause
+Style/GuardClause:
+  MinBodyLength: 2
 
-inherit_from: .rubocop_todo.yml
+# Allow explicit return with multiple return values
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+# Do not commit to use of interpolation
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Prefer symbols to look like symbols
+Style/SymbolArray:
+  EnforcedStyle: brackets

@@ -6,7 +6,7 @@ require:
 AllCops:
   TargetRubyVersion: 2.4
 
-# Be relatively lenient with line length
+# Be lenient with line length
 Layout/LineLength:
   Max: 92
 
@@ -28,6 +28,10 @@ Layout/MultilineOperationIndentation:
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
 
+# Assume the programmer knows how bracketed block syntax works
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
@@ -39,6 +43,31 @@ Style/AndOr:
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
+
+# BEGIN Enable post-0.79 cops
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+# END Enable post-0.79 cops
+
+# Use older RuboCop default
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%W': ()
+    '%w': ()
 
 # Allow explicit return with multiple return values
 Style/RedundantReturn:

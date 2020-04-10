@@ -36,6 +36,12 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Activate new cops from RuboCop 0.81
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+
 # Allow and/or for control flow only
 Style/AndOr:
   EnforcedStyle: conditionals
@@ -44,24 +50,13 @@ Style/AndOr:
 Style/GuardClause:
   MinBodyLength: 2
 
-# BEGIN Enable post-0.79 cops
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true
-
+# Activate new cops from RuboCop 0.80
 Style/HashEachMethods:
   Enabled: true
-
 Style/HashTransformKeys:
   Enabled: true
-
 Style/HashTransformValues:
   Enabled: true
-
-# END Enable post-0.79 cops
 
 # Use older RuboCop default
 Style/PercentLiteralDelimiters:

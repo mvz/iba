@@ -45,12 +45,14 @@ module Iba
 
   class BaseExpression
     def method_missing(method, *args)
-      super if /^_/.match?(method.to_s)
+      # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
+      super if method.to_s.start_with? "_"
       MethodCallExpression.new self, method, args
     end
 
     def respond_to_missing?(method)
-      return false if /^_/.match?(method.to_s)
+      # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
+      return false if method.to_s.start_with? "_"
 
       true
     end
@@ -97,7 +99,8 @@ module Iba
 
     def _override_instance_variables(vars)
       vars.each do |v|
-        next if /^@_/.match?(v)
+        # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
+        next if v.to_s.start_with? "@_"
 
         instance_variable_set v, Iba::InstanceVariableExpression.new(v.to_sym)
       end
@@ -105,7 +108,8 @@ module Iba
 
     def _override_local_variables(vars, bnd)
       vars.each do |v|
-        next if /^_/.match?(v)
+        # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
+        next if v.to_s.start_with? "_"
 
         bnd.local_variable_set "_#{v}", bnd.local_variable_get(v)
         bnd.local_variable_set v, LocalVariableExpression.new(v.to_sym)
@@ -114,7 +118,8 @@ module Iba
 
     def _restore_local_variables(vars, bnd)
       vars.each do |v|
-        next if /^_/.match?(v)
+        # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
+        next if v.to_s.start_with? "_"
 
         bnd.local_variable_set v, bnd.local_variable_get("_#{v}")
       end

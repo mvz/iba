@@ -3,6 +3,7 @@
 require "rake/clean"
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rake/manifest/task"
 
 namespace :test do
   Rake::TestTask.new(:run) do |t|
@@ -12,7 +13,13 @@ namespace :test do
   end
 end
 
+Rake::Manifest::Task.new do |t|
+  t.patterns = ["lib/**/*", "COPYING.LESSER", "LICENSE", "*.rdoc"]
+end
+
 desc "Alias to test:run"
 task test: "test:run"
+
+task build: "manifest:check"
 
 task default: "test:run"

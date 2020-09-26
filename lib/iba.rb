@@ -52,7 +52,7 @@ module Iba
 
     def respond_to_missing?(method)
       # FIXME: Remove to_s once support for Ruby < 2.7 is dropped
-      return false if method.to_s.start_with? "_"
+      return super if method.to_s.start_with? "_"
 
       true
     end
@@ -132,6 +132,7 @@ module Iba
 
   class LiteralExpression < BaseExpression
     def initialize(val)
+      super()
       @value = val
     end
 
@@ -146,6 +147,7 @@ module Iba
 
   class InstanceVariableExpression < BaseExpression
     def initialize(ivar_name)
+      super()
       @_ivar_name = ivar_name
     end
 
@@ -160,6 +162,7 @@ module Iba
 
   class LocalVariableExpression < BaseExpression
     def initialize(lvar_name)
+      super()
       @_lvar_name = lvar_name
     end
 
@@ -176,6 +179,7 @@ module Iba
     attr_reader :_method, :_reciever, :_args
 
     def initialize(reciever, methodname, args)
+      super()
       @_reciever = reciever
       @_method = methodname
       @_args = args.map { |a| _wrap(a) }

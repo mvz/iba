@@ -20,27 +20,9 @@ module Iba
 
     def analyse
       str = +"#{self} is #{call.inspect}"
-      if expression.instance_of?(MethodCallExpression) && expression._method == :==
-        lft = expression._reciever
-        rgt = expression._args.first
-        exprs = [lft, rgt].map { |e| display_subexpression e }.compact
-        str << "\n"
-        str << exprs.join(", ")
-      end
+      sub = expression._display_subexpressions(@block.binding)
+      str << "\n#{sub}" if sub
       str
-    end
-
-    private
-
-    def display_subexpression(expr)
-      # Literal expressions are their own value
-      if expr.instance_of? LiteralExpression
-        nil
-      else
-        str = expr._to_s
-        value = expr._evaluate(@block.binding).inspect
-        "#{str} is #{value}"
-      end
     end
   end
 
@@ -74,6 +56,15 @@ module Iba
       end
     end
 
+    def _display(_bnd)
+      nil
+    end
+
+    def _display_subexpressions(_bnd)
+      nil
+    end
+
+    # Handle numeric operator coersion
     def coerce(other)
       [_wrap(other), self]
     end
@@ -146,7 +137,15 @@ module Iba
     end
   end
 
-  class InstanceVariableExpression < BaseExpression
+  class DisplayableExpression < BaseExpression
+    def _display(bnd)
+      str = _to_s
+      value = _evaluate(bnd).inspect
+      "#{str} is #{value}"
+    end
+  end
+
+  class InstanceVariableExpression < DisplayableExpression
     def initialize(ivar_name)
       super()
       @_ivar_name = ivar_name
@@ -161,7 +160,7 @@ module Iba
     end
   end
 
-  class LocalVariableExpression < BaseExpression
+  class LocalVariableExpression < DisplayableExpression
     def initialize(lvar_name)
       super()
       @_lvar_name = lvar_name
@@ -176,7 +175,7 @@ module Iba
     end
   end
 
-  class MethodCallExpression < BaseExpression
+  class MethodCallExpression < DisplayableExpression
     attr_reader :_method, :_reciever, :_args
 
     def initialize(reciever, methodname, args)
@@ -213,6 +212,14 @@ module Iba
       rcv = @_reciever._evaluate(bnd)
       args = @_args.map { |arg| arg._evaluate(bnd) }
       rcv.send @_method, *args
+    end
+
+    def _display_subexpressions(bnd)
+      return nil if @_method != :==
+
+      lft = @_reciever._display(bnd)
+      rgt = @_args.first._display(bnd)
+      [lft, rgt].compact.join(", ")
     end
 
     private

@@ -32,6 +32,33 @@ class AnalyseTest < Test::Unit::TestCase
     assert_equal "(foo == [2, \"baz\"]) is false\nfoo is [1, \"bar\"]", result
   end
 
+  def test_operator_neq
+    foo = 42
+    bar = 23
+    result = combinator { foo != bar }.analyse
+    assert_equal "(foo != bar) is true\nfoo is 42, bar is 23", result
+  end
+
+  def test_operator_lt
+    foo = 42
+    bar = 23
+    result = combinator { foo < bar }.analyse
+    assert_equal "(foo < bar) is false\nfoo is 42, bar is 23", result
+  end
+
+  def test_operator_gt
+    foo = 42
+    bar = 23
+    result = combinator { foo > bar }.analyse
+    assert_equal "(foo > bar) is true\nfoo is 42, bar is 23", result
+  end
+
+  def test_method_call
+    foo = 42
+    result = combinator { foo.negative? }.analyse
+    assert_equal "foo.negative? is false\nfoo is 42", result
+  end
+
   def test_string_variable
     foo = "blub"
     assert_equal 'foo is "blub"', combinator { foo }.analyse
@@ -64,7 +91,7 @@ class AnalyseTest < Test::Unit::TestCase
 
   def test_instance_variable_as_argument_of_operator
     @foo = 23
-    assert_equal "(23 + @foo) is 46", combinator { 23 + @foo }.analyse
+    assert_equal "(23 + @foo) is 46\n@foo is 23", combinator { 23 + @foo }.analyse
   end
 
   def test_complex_subexpressions

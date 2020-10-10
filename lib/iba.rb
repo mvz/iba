@@ -190,25 +190,12 @@ module Iba
     end
 
     def _to_s
-      rcv = @_reciever._to_s
-      args = @_args.map { |a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
-
       if @_method == :[]
-        "#{rcv}[#{args[0]}]"
+        _index_to_s
       elsif _method_is_operator?
-        case @_args.length
-        when 0
-          "#{@_method.to_s.sub(/@$/, '')}#{rcv}"
-        when 1
-          "(#{rcv} #{@_method} #{args.first})"
-        else
-          raise NotImplementedError
-        end
+        _operator_to_s
       else
-        str = rcv == "" ? +"" : +"#{rcv}."
-        str << @_method.to_s
-        str << "(#{args.join(', ')})" unless @_args.empty?
-        str
+        _regular_method_to_s
       end
     end
 
@@ -225,6 +212,37 @@ module Iba
     end
 
     private
+
+    def _receiver_s
+      @_reciever._to_s
+    end
+
+    def _args_s
+      @_args.map { |a| a.respond_to?(:_to_s) ? a._to_s : a.to_s }
+    end
+
+    def _index_to_s
+      "#{_receiver_s}[#{_args_s[0]}]"
+    end
+
+    def _operator_to_s
+      case @_args.length
+      when 0
+        "#{@_method.to_s.sub(/@$/, '')}#{_receiver_s}"
+      when 1
+        "(#{_receiver_s} #{@_method} #{_args_s.first})"
+      else
+        raise NotImplementedError
+      end
+    end
+
+    def _regular_method_to_s
+      rcv = _receiver_s
+      str = rcv == "" ? +"" : +"#{rcv}."
+      str << @_method.to_s
+      str << "(#{_args_s.join(', ')})" unless @_args.empty?
+      str
+    end
 
     def _method_is_operator?
       @_method.to_s !~ /^[a-z]/

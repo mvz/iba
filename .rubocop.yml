@@ -43,6 +43,11 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Allow long test methods that accumulate a lot of complexity
+Metrics/AbcSize:
+  Exclude:
+    - 'test/*_test.rb'
+
 Performance/StartWith:
   AutoCorrect: true
 

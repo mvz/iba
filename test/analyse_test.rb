@@ -64,7 +64,7 @@ class AnalyseTest < Test::Unit::TestCase
 
   def test_instance_variable_as_argument_of_operator
     @foo = 23
-    assert_equal "(23 + @foo) is 46", combinator { 23 + @foo }.analyse
+    assert_equal "(23 + @foo) is 46\n@foo is 23", combinator { 23 + @foo }.analyse
   end
 
   def test_complex_subexpressions

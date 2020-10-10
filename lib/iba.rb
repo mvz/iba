@@ -215,11 +215,9 @@ module Iba
     end
 
     def _display_subexpressions(bnd)
-      return nil if @_method != :==
-
-      lft = @_reciever._display(bnd)
-      rgt = @_args.first._display(bnd)
-      [lft, rgt].compact.join(", ")
+      rcv = @_reciever._display(bnd)
+      args = @_args.map { |arg| arg._display(bnd) }
+      [rcv, *args].compact.join(", ")
     end
 
     private

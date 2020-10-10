@@ -39,6 +39,20 @@ class AnalyseTest < Test::Unit::TestCase
     assert_equal "(foo != bar) is true\nfoo is 42, bar is 23", result
   end
 
+  def test_operator_lt
+    foo = 42
+    bar = 23
+    result = combinator { foo < bar }.analyse
+    assert_equal "(foo < bar) is false\nfoo is 42, bar is 23", result
+  end
+
+  def test_operator_gt
+    foo = 42
+    bar = 23
+    result = combinator { foo > bar }.analyse
+    assert_equal "(foo > bar) is true\nfoo is 42, bar is 23", result
+  end
+
   def test_string_variable
     foo = "blub"
     assert_equal 'foo is "blub"', combinator { foo }.analyse

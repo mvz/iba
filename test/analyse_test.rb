@@ -32,6 +32,13 @@ class AnalyseTest < Test::Unit::TestCase
     assert_equal "(foo == [2, \"baz\"]) is false\nfoo is [1, \"bar\"]", result
   end
 
+  def test_operator_neq
+    foo = 42
+    bar = 23
+    result = combinator { foo != bar }.analyse
+    assert_equal "(foo != bar) is true\nfoo is 42, bar is 23", result
+  end
+
   def test_string_variable
     foo = "blub"
     assert_equal 'foo is "blub"', combinator { foo }.analyse

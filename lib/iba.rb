@@ -48,6 +48,10 @@ module Iba
       method_missing :==, other
     end
 
+    def !=(other)
+      method_missing :!=, other
+    end
+
     def _wrap(arg)
       if arg.is_a? BaseExpression
         arg

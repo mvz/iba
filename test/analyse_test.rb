@@ -5,7 +5,9 @@ require_relative "test_helper"
 # Test how the combinator analyses the parsed block contents.
 class AnalyseTest < Test::Unit::TestCase
   def test_empty_block
+    # rubocop:disable Lint/EmptyBlock
     assert_equal "nil is nil", combinator {}.analyse
+    # rubocop:enable Lint/EmptyBlock
   end
 
   def test_variable

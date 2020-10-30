@@ -5,7 +5,9 @@ require_relative "test_helper"
 # Test how the combinator displays the parsed block contents.
 class DisplayTest < Test::Unit::TestCase
   def test_empty_combinator
+    # rubocop:disable Lint/EmptyBlock
     assert_equal "nil", combinator {}.to_s
+    # rubocop:enable Lint/EmptyBlock
   end
 
   def test_literal_number

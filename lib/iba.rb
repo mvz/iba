@@ -251,7 +251,7 @@ module Iba
 
   module BlockAssertion
     def assert(*args, &block)
-      if block_given?
+      if block
         if yield
           assert_block("true") { true }
         else

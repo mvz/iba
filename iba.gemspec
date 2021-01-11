@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rake-manifest", "~> 0.1.0"
+  spec.add_development_dependency "rake-manifest", "~> 0.2.0"
   spec.add_development_dependency "rubocop", "~> 1.8.0"
   spec.add_development_dependency "rubocop-performance", "~> 1.9.0"
   spec.add_development_dependency "test-unit", "~> 3.1"

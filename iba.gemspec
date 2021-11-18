@@ -17,8 +17,10 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/mvz/iba"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = File.read("Manifest.txt").split
+
   spec.rdoc_options = ["--main", "README.rdoc"]
   spec.extra_rdoc_files = ["README.rdoc", "LICENSE", "COPYING.LESSER"]
   spec.require_paths = ["lib"]

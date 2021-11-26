@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "iba/version"
+
 module Iba
   class Combinator
     def initialize(&blk)

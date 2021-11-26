@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "lib/iba/version"
+
 Gem::Specification.new do |spec|
   spec.name = "iba"
-  spec.version = "0.0.5"
+  spec.version = Iba::VERSION
   spec.authors = ["Matijs van Zuijlen"]
   spec.email = ["matijs@matijs.net"]
 
@@ -12,7 +14,6 @@ Gem::Specification.new do |spec|
   DESC
   spec.homepage = "http://www.github.com/mvz/iba"
   spec.license = "LGPL-3.0+"
-
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["homepage_uri"] = spec.homepage

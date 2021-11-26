@@ -1,4 +1,5 @@
 lib/iba.rb
+lib/iba/version.rb
 COPYING.LESSER
 LICENSE
 README.rdoc

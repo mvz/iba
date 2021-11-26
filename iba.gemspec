@@ -21,10 +21,10 @@ Gem::Specification.new do |spec|
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = File.read("Manifest.txt").split
+  spec.require_paths = ["lib"]
 
   spec.rdoc_options = ["--main", "README.rdoc"]
   spec.extra_rdoc_files = ["README.rdoc", "LICENSE", "COPYING.LESSER"]
-  spec.require_paths = ["lib"]
 
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rake-manifest", "~> 0.2.0"

@@ -22,4 +22,4 @@ task test: "test:run"
 
 task build: "manifest:check"
 
-task default: "test:run"
+task default: ["test:run", "manifest:check"]

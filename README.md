@@ -48,7 +48,7 @@ Current limits:
   not be used inside the block.
 
 Iba's implementation is inspired by [Arlo], a generic combinator library
-for Python.
+for Python. The implementation of Arlo is now [on github][arlo-code].
 
 ## Install
 
@@ -59,7 +59,8 @@ gem install iba
 <!-- Links -->
 
 [Wrong]: https://github.com/sconover/wrong
-[Arlo]: http://withoutane.com/rants/2008/12/arlo-generic-combinators-for-python
+[Arlo]: https://web.archive.org/web/20081228090759/http://withoutane.com:80/rants/2008/12/arlo-generic-combinators-for-python
+[arlo-code]: https://github.com/tangentstorm/workshop/blob/main/code/arlo.py
 
 ## Licence
 

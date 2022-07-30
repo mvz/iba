@@ -14,7 +14,7 @@ namespace :test do
 end
 
 Rake::Manifest::Task.new do |t|
-  t.patterns = ["lib/**/*", "COPYING.LESSER", "LICENSE", "*.rdoc"]
+  t.patterns = ["lib/**/*", "COPYING.LESSER", "LICENSE", "*.md"]
 end
 
 desc "Alias to test:run"

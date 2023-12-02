@@ -263,7 +263,7 @@ module Iba
         end
       else
         test, msg = *args
-        super test, msg
+        super(test, msg)
       end
     end
   end

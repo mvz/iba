@@ -2,4 +2,5 @@ lib/iba.rb
 lib/iba/version.rb
 COPYING.LESSER
 LICENSE
+CHANGELOG.md
 README.md

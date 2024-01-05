@@ -18,13 +18,14 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/mvz/iba"
+  spec.metadata["changelog_uri"] = "https://github.com/mvz/iba/blob/master/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = File.read("Manifest.txt").split
   spec.require_paths = ["lib"]
 
-  spec.rdoc_options = ["--main", "README.rdoc"]
-  spec.extra_rdoc_files = ["README.rdoc", "LICENSE", "COPYING.LESSER"]
+  spec.rdoc_options = ["--main", "README.md"]
+  spec.extra_rdoc_files = ["README.md", "LICENSE", "COPYING.LESSER"]
 
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rake-manifest", "~> 0.2.0"

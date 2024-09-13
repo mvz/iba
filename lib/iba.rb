@@ -21,7 +21,7 @@ module Iba
     end
 
     def analyse
-      str = +"#{self} is #{call.inspect}"
+      str = "#{self} is #{call.inspect}"
       sub = expression._display_subexpressions(@block.binding)
       str << "\n#{sub}" if sub
       str
@@ -240,7 +240,7 @@ module Iba
 
     def _regular_method_to_s
       rcv = _receiver_s
-      str = rcv == "" ? +"" : +"#{rcv}."
+      str = rcv == "" ? +"" : "#{rcv}."
       str << @_method.to_s
       str << "(#{_args_s.join(', ')})" unless @_args.empty?
       str

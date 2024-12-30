@@ -13,8 +13,9 @@ Gem::Specification.new do |spec|
     Asserts blocks, prints introspective failure messages.
   DESC
   spec.homepage = "http://www.github.com/mvz/iba"
+
   spec.license = "LGPL-3.0+"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.1.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/mvz/iba"

@@ -8,8 +8,8 @@ class AssertTest < Test::Unit::TestCase
     assert { true }
   end
 
-  def failing_block_assertion_test(message, &block)
-    assert(&block)
+  def failing_block_assertion_test(message, &)
+    assert(&)
   rescue Exception => e
     assert_equal message, e.message
   end

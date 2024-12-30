@@ -6,7 +6,7 @@ require "iba"
 class Test::Unit::TestCase
   include Iba::BlockAssertion
 
-  def combinator(&blk)
-    Iba::Combinator.new(&blk)
+  def combinator(&)
+    Iba::Combinator.new(&)
   end
 end

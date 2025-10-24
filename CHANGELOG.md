@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.8 / 2025-10-24
+
+* Support Ruby 3.2 through 3.4, and JRuby 10.0 ([#72] and [#74] by [mvz])
+
+[#72]: https://github.com/mvz/iba/pull/72
+[#74]: https://github.com/mvz/iba/pull/74
+
 ## 0.0.7 / 2024-01-05
 
 * Support Ruby 3.0 through 3.3, and JRuby 9.4 ([#63], [#64] and [#68] by [mvz])
